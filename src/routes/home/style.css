@@ -1,0 +1,17 @@
+.home {
+	padding: 56px 20px;
+	min-height: 100%;
+	width: 100%;
+}
+
+.cardSmall {
+	height: 80px;
+	width: 60px;
+	margin: 5px;
+}
+
+.cardMedium {
+	height: 160px;
+	width: 120px;
+	margin: 5px;
+}
