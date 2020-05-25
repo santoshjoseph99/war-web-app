@@ -1,5 +1,10 @@
+import { Deck } from "deckjs";
 
 export class Game {
+  constructor() {
+    this.deck = new Deck(1);
+  }
+
   compare(card1, card2) {
     if (card1.getValue() > card2.getValue()) {
       return 1;
@@ -7,6 +12,22 @@ export class Game {
       return -1;
     }
     return 0;
+  }
+
+  /// public
+  newGame() {
+    this.deck.shuffle();
+    const cards1 = [], cards2 = [];
+    for(let i = 0; i < 26; i++) {
+      cards1.push(this.deck.getCard());
+    }
+    for(let i = 0; i < 26; i++) {
+      cards2.push(this.deck.getCard());
+    }
+    return {
+      player1Cards: cards1,
+      player2Cards: cards2
+    };
   }
 
   createWinner(winner) {
@@ -114,6 +135,7 @@ export class Game {
     return result;
   }
 
+  /// public
   play(cards1, cards2, tieCards) {
     if (cards1.length === 0) {
       return this.createWinner('player2');
