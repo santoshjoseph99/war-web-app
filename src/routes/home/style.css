@@ -15,3 +15,19 @@
 	width: 120px;
 	margin: 5px;
 }
+
+.newGameContainer {
+	margin-top: 20px;
+}
+
+.stats {
+	margin: 10px;
+}
+
+.gameResult {
+	margin: 10px;
+}
+
+.cardContainer {
+	display: inline-block;
+}

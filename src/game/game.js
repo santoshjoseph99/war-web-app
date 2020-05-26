@@ -4,7 +4,7 @@ export class Game {
   constructor() {
     this.deck = new Deck(1);
   }
-
+  /// public
   compare(card1, card2) {
     if (card1.getValue() > card2.getValue()) {
       return 1;
@@ -16,6 +16,7 @@ export class Game {
 
   /// public
   newGame() {
+    this.deck.init(1, 0);
     this.deck.shuffle();
     const cards1 = [], cards2 = [];
     for(let i = 0; i < 26; i++) {
