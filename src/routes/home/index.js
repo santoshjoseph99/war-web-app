@@ -5,9 +5,9 @@ import GameContext from '../../components/gameContext';
 
 const URL = 'https://sjcards.s3-us-west-1.amazonaws.com';
 
-class Player {
-	cards = [];
-}
+// class Player {
+// 	cards = [];
+// }
 
 const EmptyCard = {
 	faceUp: false,
@@ -31,6 +31,30 @@ const CardImage = (props) => {
 		<img className={cardTypeClass} src={src} alt={`card ${card.toLongString()}`} />
 	);
 };
+
+// const CardTieImages = (props) => {
+// 	const {cards} = props;
+// 	const downCards = cards.filter(c => !c.faceUp);
+// 	const upCard = cards.filter(c => c.faceUp);
+
+// 	return (
+// 		<div>
+// 			{downCards.map(() => 
+// 				<img className={'cardSmall'} src={`${URL}/yellow_back.png`} alt={'card face down'} />)
+// 			}
+// 			<img className={'cardSmall'} src={`${URL}/${upCard.toShortString().toUpperCase()}.png`}
+// 					 alt={`card ${upCard.toLongString()}`} />
+// 		</div>
+// 	);
+// };
+
+const getCardUp = (cards) => {
+	return cards[cards.length - 1];
+}
+
+const getNumCardsWon = (result) => {
+	return result.player1.cards.length + result.player2.cards.length;
+}
 
 const Home = () => {
 	const gameContext = useContext(GameContext);
@@ -60,20 +84,26 @@ const Home = () => {
 		if(result.play === 'tie') {
 			setTieCards(result.tieCards);
 			setGameResult('tie! Ready to play WAR!');
+			const c1 = getCardUp(result.player1.cards);
+			const c2 = getCardUp(result.player2.cards);
+			setPlayer1Card(c1);
+			setPlayer2Card(c2);
 		} else {
 			setTieCards(null);
 		}
 		if(result.play === 'end') {
 			isGameOver(!gameOver);
 			setGameResult(`GAME OVER! 
-				${result.player1.actions[0] === 'winner' ? 'player1 wins' : 'player 2 wins'}`);
+				${result.player1.actions[0] === 'winner' ? 'player 1 wins' : 'player 2 wins'}`);
 		}
 		if(result.play === 'play') {
-			setPlayer1Card(result.player1.cards[0]);
-			setPlayer2Card(result.player2.cards[0]);
-			const compareResult = gameContext.game.compare(result.player1.cards[0], result.player2.cards[0]);
-			const compareResultStr = compareResult === 1 ? 'player1 wins' : 'player2 wins';
-			setGameResult(compareResultStr);
+			const c1 = getCardUp(result.player1.cards);
+			const c2 = getCardUp(result.player2.cards);
+			setPlayer1Card(c1);
+			setPlayer2Card(c2);
+			const compareResult = gameContext.game.compare(c1, c2);
+			const compareResultStr = compareResult === 1 ? 'player 1 wins ' : 'player 2 wins ';
+			setGameResult(`${compareResultStr} ${getNumCardsWon(result)} cards`);
 		}
 	}, [gameContext, cards1, cards2, tieCards, numHands, gameOver]);
 	
@@ -107,9 +137,9 @@ const Home = () => {
 			<div class={style.gameResult}>
 				<p>Result: {gameResult}</p>
 			</div>
-			<div class={style.tieResults}>
+			{/* <div class={style.tieResults}>
 				{tieCards ? "TIE RESULTS: todo" : ""}
-			</div>
+			</div> */}
 		</div>
 	);
 }

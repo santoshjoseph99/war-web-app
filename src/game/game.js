@@ -101,13 +101,13 @@ export class Game {
 
     if (compareResult === 1) {
       this.addCompareResult(result, cards1, tieCards);
-       result.play = 'play';
+      result.play = 'play';
     } else if (compareResult === -1) {
       this.addCompareResult(result, cards2, tieCards);
       result.play = 'play';
     } else {
-      result.play = 'tie';
       result.tieCards = tieCards.concat(tieCards1, tieCards2);
+      result.play = 'tie';
     }
     return result;
   }
